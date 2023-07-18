@@ -17,7 +17,9 @@ namespace Sistema_APE
 {
     public partial class Inventario : Form
     {
-        SqlConnection conexion = new SqlConnection("server = ALFREDOLOPEZ; database = TIENDADETECNOLOGIA; integrated security = true");
+        private static string connectionString = Connection.getConnectionString();
+
+        SqlConnection conexion = new SqlConnection(connectionString);
         public Inventario()
         {
             InitializeComponent();
@@ -31,10 +33,7 @@ namespace Sistema_APE
         {
             conexion.Open();
             //CONSULTA DE INVENTARIO
-            string query = "SELECT P.id_producto, P.nombre, P.descripcion, P.precio, P.stock, C.nombre AS categoria, M.nombre AS marca " +
-               "FROM Productos P " +
-               "JOIN Categorias C ON P.id_categoria = C.id_categoria " +
-               "JOIN Marcas M ON P.id_marca = M.id_marca";
+            string query = "SELECT * FROM VistaInventario";
             SqlDataAdapter adapter = new SqlDataAdapter(query, conexion);
             DataTable dataTable = new DataTable();
             adapter.Fill(dataTable);
@@ -71,27 +70,19 @@ namespace Sistema_APE
         }
         private void ConsultarPorId()
         {
-            //CONSULTA DE LOS PRODUCTOS============================================================================
             Producto unProducto = new Producto();
             conexion.Open();
 
             string strId = txtBuscarProducto.Text;
 
-            string consultaAlumnos = "SELECT P.id_producto, P.nombre, P.descripcion, P.precio, P.stock, C.nombre AS categoria, M.nombre AS marca " +
-               "FROM Productos P " +
-               "JOIN Categorias C ON P.id_categoria = C.id_categoria " +
-               "JOIN Marcas M ON P.id_marca = M.id_marca where P.id_producto= " + int.Parse(strId);
-            SqlCommand comandoProducto = new SqlCommand(consultaAlumnos, conexion);
+            string consultaProducto = "SELECT * FROM VistaInventario WHERE id_producto = " + int.Parse(strId);
+            SqlCommand comandoProducto = new SqlCommand(consultaProducto, conexion);
             SqlDataReader registroProductos = comandoProducto.ExecuteReader();
             if (registroProductos.Read())
             {
                 unProducto.IdProducto = int.Parse(registroProductos["id_producto"].ToString());
-                unProducto.Nombre = registroProductos["nombre"].ToString();
-                unProducto.Descripcion = registroProductos["descripcion"].ToString();
-                unProducto.Precio = decimal.Parse(registroProductos["precio"].ToString());
-                unProducto.Stock = int.Parse(registroProductos["stock"].ToString());
-                unProducto.Categoria = registroProductos["categoria"].ToString();
-                unProducto.Marca = registroProductos["marca"].ToString();
+                unProducto.Nombre = registroProductos["nombre_producto"].ToString();
+                unProducto.Stock = int.Parse(registroProductos["cantidad"].ToString());
 
                 conexion.Close();
             }
@@ -118,11 +109,7 @@ namespace Sistema_APE
 
             string strNombre = txtBuscarProducto.Text;
 
-            string consultaProductos = "SELECT P.id_producto, P.nombre, P.descripcion, P.precio, P.stock, C.nombre AS categoria, M.nombre AS marca " +
-               "FROM Productos P " +
-               "JOIN Categorias C ON P.id_categoria = C.id_categoria " +
-               "JOIN Marcas M ON P.id_marca = M.id_marca " +
-               "WHERE P.nombre LIKE '%" + strNombre + "%'";
+            string consultaProductos = $"SELECT * FROM VistaInventario WHERE nombre_producto LIKE '%{strNombre}%'";
             SqlCommand comandoProducto = new SqlCommand(consultaProductos, conexion);
             SqlDataReader registroProductos = comandoProducto.ExecuteReader();
             if (registroProductos.Read())
