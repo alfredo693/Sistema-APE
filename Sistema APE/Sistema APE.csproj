@@ -64,6 +64,7 @@
     <Compile Include="Compras.Designer.cs">
       <DependentUpon>Compras.cs</DependentUpon>
     </Compile>
+    <Compile Include="Connection.cs" />
     <Compile Include="ModificarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +118,11 @@
     <Compile Include="Profesor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProyectoFinalTiendaDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProyectoFinalTiendaDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="TIENDADETECNOLOGIADataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -166,6 +172,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="ProyectoFinalTiendaDataSet.xsc">
+      <DependentUpon>ProyectoFinalTiendaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ProyectoFinalTiendaDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProyectoFinalTiendaDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ProyectoFinalTiendaDataSet.xss">
+      <DependentUpon>ProyectoFinalTiendaDataSet.xsd</DependentUpon>
+    </None>
     <None Include="TIENDADETECNOLOGIADataSet.xsc">
       <DependentUpon>TIENDADETECNOLOGIADataSet.xsd</DependentUpon>
     </None>

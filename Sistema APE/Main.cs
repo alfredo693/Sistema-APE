@@ -12,9 +12,11 @@ namespace Sistema_APE
 {
     public partial class Main : Form
     {
-        public Main()
+        private string nombreEmpleado;
+        public Main(string nombreEmpleado)
         {
             InitializeComponent();
+            this.nombreEmpleado = nombreEmpleado;
         }
 
         private void btnInventario_Click(object sender, EventArgs e)

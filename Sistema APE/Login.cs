@@ -19,135 +19,80 @@ namespace Sistema_APE
             InitializeComponent();
         }
 
-        SqlConnection conexion = new SqlConnection("server = ALFREDOLOPEZ; database = TIENDADETECNOLOGIA; integrated security = true");
+        private string ObtenerNombreEmpleado(string nombreUsuario)
+        {
+            string nombreCompleto = string.Empty;
+
+            string connectionString = Connection.getConnectionString();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT e.nombre, e.apellido FROM usuarios u INNER JOIN empleados e ON u.id_empleado = e.id_empleado WHERE u.nombre_usuario = @nombreUsuario";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@nombreUsuario", nombreUsuario);
+
+                    connection.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        string nombre = reader["nombre"].ToString();
+                        string apellido = reader["apellido"].ToString();
+                        nombreCompleto = $"{nombre} {apellido}";
+                    }
+
+                    reader.Close();
+                }
+            }
+
+            return nombreCompleto;
+        }
 
         private void btnAcceder_Click(object sender, EventArgs e)
         {
-            if (radVendedor.Checked)
+            string connectionString = Connection.getConnectionString();
+
+            string nombreUsuario = txtUsuario.Text;
+            string password = txtPassword.Text;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                AccesosGerente(this.txtUsuario.Text, this.txtPassword.Text);
-            }
-            if (radGerente.Checked)
-            {
-                AccesoVendedor(this.txtUsuario.Text, this.txtPassword.Text);
-            }
-            if (radAlmacen.Checked)
-            {
-                AccesoAlmacen(this.txtUsuario.Text, this.txtPassword.Text);
+                string query = "SELECT COUNT(*) FROM usuarios WHERE nombre_usuario = @nombreUsuario AND contraseña = @contraseña";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@nombreUsuario", nombreUsuario);
+                    command.Parameters.AddWithValue("@contraseña", password);
+
+                    connection.Open();
+
+                    int result = (int)command.ExecuteScalar();
+
+                    if (result > 0)
+                    {
+                        String nombreEmpleado = ObtenerNombreEmpleado(nombreUsuario);
+
+                        Main formPrincipal = new Main(nombreEmpleado);
+                        this.Hide();
+                        formPrincipal.ShowDialog();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nombre de usuario o contraseña incorrectos.", "Error de inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
-
-
-        public void AccesosGerente(string usuario, string contraseña)
-        {
-            try
-            {
-                SqlCommand comando1 = new SqlCommand(" Select nombre FROM Empleados  WHERE nombre= @Usuario AND  clave= @Contrasena and id_puesto = 1", conexion);
-                comando1.Parameters.AddWithValue("Usuario", usuario);
-                comando1.Parameters.AddWithValue("Contrasena", contraseña);
-
-                SqlDataAdapter adaptador = new SqlDataAdapter(comando1);
-                DataTable Usuarios = new DataTable();
-                adaptador.Fill(Usuarios);
-                if (Usuarios.Rows.Count == 1)
-                {
-                    MessageBox.Show("Bienvenida/o");
-                    Form.ActiveForm.Visible = false;
-                    Main Main = new Main();
-                    Main.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Usuario y|o Cotraseña incorrecta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            finally
-            {
-                conexion.Close();
-            }
-        }
-        public void AccesoVendedor(string usuario, string contraseña)
-        {
-            try
-            {
-                SqlCommand comando1 = new SqlCommand(" Select Nombre FROM Empleados  WHERE nombre= @Usuario AND  clave= @Contrasena and id_puesto = 3", conexion);
-                comando1.Parameters.AddWithValue("Usuario", usuario);
-                comando1.Parameters.AddWithValue("Contrasena", contraseña);
-
-                SqlDataAdapter adaptador = new SqlDataAdapter(comando1);
-                DataTable Empleados = new DataTable();
-                adaptador.Fill(Empleados);
-                if (Empleados.Rows.Count == 1)
-                {
-                    MessageBox.Show("Bienvenida/o");
-                    Form.ActiveForm.Visible = false;
-                    //Gerente gerente = new Gerente();
-                    //gerente.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Usuario y|o Cotraseña incorrecta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            finally
-            {
-                conexion.Close();
-            }
-        }
-        public void AccesoAlmacen(string usuario, string contraseña)
-        {
-            try
-            {
-                SqlCommand comando1 = new SqlCommand(" Select Nombre FROM Empleados  WHERE nombre= @Usuario AND  clave= @Contrasena AND id_puesto = 4", conexion);
-                comando1.Parameters.AddWithValue("Usuario", usuario);
-                comando1.Parameters.AddWithValue("Contrasena", contraseña);
-
-                SqlDataAdapter adaptador = new SqlDataAdapter(comando1);
-                DataTable Empleados = new DataTable();
-                adaptador.Fill(Empleados);
-                if (Empleados.Rows.Count == 1)
-                {
-                    MessageBox.Show("Bienvenida/o");
-                    Form.ActiveForm.Visible = false;
-                    Main Inventario = new Main();
-                    Inventario.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Usuario y|o Cotraseña incorrecta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            finally
-            {
-                conexion.Close();
-            }
-        }
-
-
 
         private void Login_Load(object sender, EventArgs e)
         {
             radAlmacen.Checked = true;
-            txtUsuario.Text = "Mario";
-            txtPassword.Text = "12345";
+            txtUsuario.Text = "JEguia100";
+            txtPassword.Text = "JEguia";
         }
 
         private void picMinimizarCerrar_Click(object sender, EventArgs e)
