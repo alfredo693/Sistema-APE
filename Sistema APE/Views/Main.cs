@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sistema_APE.Views;
 
 namespace Sistema_APE
 {
@@ -82,6 +83,15 @@ namespace Sistema_APE
         private void picCerrar_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnPedidos_Click(object sender, EventArgs e)
+        {
+            Pedidos pedidos = new Pedidos();
+            pedidos.TopLevel = false;
+            PanelContenedor.Controls.Clear();
+            PanelContenedor.Controls.Add(pedidos);
+            pedidos.Show();
         }
     }
 }
