@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.IO;
-using System.Diagnostics;
+using Font = System.Drawing.Font;
 
 namespace Sistema_APE
 {
     public partial class Inventario : Form
     {
-        private static string connectionString = Connection.getConnectionString();
+        private static readonly string connectionString = Connection.getConnectionString();
 
-        SqlConnection conexion = new SqlConnection(connectionString);
+        private readonly SqlConnection conexion = new SqlConnection(connectionString);
+
         public Inventario()
         {
             InitializeComponent();
@@ -28,20 +26,60 @@ namespace Sistema_APE
         private void Inventario_Load(object sender, EventArgs e)
         {
             MostrarTabla();
+            
+
+            string mostrarCategorias = "SELECT id_categoria, nombre FROM categorias";
+            SqlDataAdapter adapter = new SqlDataAdapter(mostrarCategorias, conexion);
+
+            DataSet dataSet = new DataSet();
+            adapter.Fill(dataSet, "categorias");
+            comboBox1.DisplayMember = "nombre";
+            comboBox1.ValueMember = "id_categoria";
+            comboBox1.DataSource = dataSet.Tables["categorias"];
+
+            string mostrarMarcas = "SELECT id_marca, nombre FROM marcas";
+            SqlDataAdapter adapterMarcas = new SqlDataAdapter(mostrarMarcas, conexion);
+            DataSet dataSetMarcas = new DataSet();
+            adapterMarcas.Fill(dataSetMarcas, "marcas");
+            comboBox2.DisplayMember = "nombre";
+            comboBox2.ValueMember = "id_marca";
+            comboBox2.DataSource = dataSetMarcas.Tables["marcas"];
+
+            conexion.Open();
+
+            dtgProductosInventario.ReadOnly = true;
+            dtgProductosInventario.AllowUserToAddRows = false;
+            dtgProductosInventario.AllowUserToDeleteRows = false;
+            dtgProductosInventario.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dtgProductosInventario.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dtgProductosInventario.AllowUserToOrderColumns = false;
+            dtgProductosInventario.MultiSelect = false;
+            dtgProductosInventario.ColumnHeadersDefaultCellStyle.Font = new Font(DataGridView.DefaultFont, FontStyle.Bold);
+            dtgProductosInventario.AllowUserToOrderColumns = false;
+            dtgProductosInventario.AllowUserToResizeColumns = false;
+            dtgProductosInventario.AllowUserToResizeRows = false;
+
+            dtgProductosInventario.Columns[0].HeaderText = "ID";
+            dtgProductosInventario.Columns[1].HeaderText = "Producto";
+            dtgProductosInventario.Columns[2].HeaderText = "Descripción";
+            dtgProductosInventario.Columns[3].HeaderText = "Precio";
+            dtgProductosInventario.Columns[4].HeaderText = "Stock";
+            dtgProductosInventario.Columns[5].HeaderText = "Categoría";
+            dtgProductosInventario.Columns[6].HeaderText = "Marca";
+
         }
+
         public void MostrarTabla()
         {
-            conexion.Open();
-            //CONSULTA DE INVENTARIO
-            string query = "SELECT * FROM VistaInventario";
-            SqlDataAdapter adapter = new SqlDataAdapter(query, conexion);
-            DataTable dataTable = new DataTable();
+            var query = "SELECT * FROM VistaInventario";
+            var adapter = new SqlDataAdapter(query, conexion);
+            var dataTable = new DataTable();
             adapter.Fill(dataTable);
 
-            // Asigna el DataTable al DataGridView control para mostrar los datos en la tabla
             dtgProductosInventario.DataSource = dataTable;
             conexion.Close();
         }
+
         private void btnBuscarProducto_Click(object sender, EventArgs e)
         {
             try
@@ -50,417 +88,217 @@ namespace Sistema_APE
                 {
                     ConsultarPorId();
                 }
-                if (radNombre.Checked)
+                else if (radNombre.Checked)
                 {
                     ConsultarPorNombre();
                 }
-                if (radMarca.Checked)
-                {
-                    ConsultarPorMarca();
-                }
-                if (radCategoria.Checked)
+                else if (radCategoria.Checked)
                 {
                     ConsultarPorCategoria();
+                }
+                else if (radMarca.Checked)
+                {
+                    ConsultarPorMarca();
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show("Introduzca una palabra clave para buscar el producto de acuerdo a la opción que eligió", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Introduzca una palabra clave para buscar el producto de acuerdo a la opción que eligió", "ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void ConsultarPorId()
         {
-            Producto unProducto = new Producto();
-            conexion.Open();
+            var strId = txtBuscarProducto.Text.Trim();
 
-            string strId = txtBuscarProducto.Text;
-
-            string consultaProducto = "SELECT * FROM VistaInventario WHERE id_producto = " + int.Parse(strId);
-            SqlCommand comandoProducto = new SqlCommand(consultaProducto, conexion);
-            SqlDataReader registroProductos = comandoProducto.ExecuteReader();
-            if (registroProductos.Read())
+            if (!int.TryParse(strId, out int idProducto))
             {
-                unProducto.IdProducto = int.Parse(registroProductos["id_producto"].ToString());
-                unProducto.Nombre = registroProductos["nombre_producto"].ToString();
-                unProducto.Stock = int.Parse(registroProductos["cantidad"].ToString());
+                MessageBox.Show("Ingrese un ID de producto válido.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                conexion.Close();
+            var consultaProducto = "SELECT * FROM VistaInventario WHERE id_producto = @id";
+            var comandoProducto = new SqlCommand(consultaProducto, conexion);
+            comandoProducto.Parameters.AddWithValue("@id", idProducto);
+            var adaptador = new SqlDataAdapter();
+            adaptador.SelectCommand = comandoProducto;
+            var dataTable = new DataTable();
+            adaptador.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                dtgProductosInventario.DataSource = dataTable;
             }
             else
             {
-                MessageBox.Show("No existe un producto con ese id", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No existe un producto con ese ID.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            SqlDataAdapter adaptador = new SqlDataAdapter();
-            adaptador.SelectCommand = comandoProducto;
-            DataTable PRODUCTOS = new DataTable();
-            adaptador.Fill(PRODUCTOS);
-            dtgProductosInventario.DataSource = PRODUCTOS;
-
-            conexion.Close();
-            registroProductos.Close();
         }
+
 
         private void ConsultarPorNombre()
         {
-            //CONSULTA DE LOS PRODUCTOS============================================================================
-            Producto unProducto = new Producto();
-            conexion.Open();
+            var strNombre = txtBuscarProducto.Text.Trim();
 
-            string strNombre = txtBuscarProducto.Text;
-
-            string consultaProductos = $"SELECT * FROM VistaInventario WHERE nombre_producto LIKE '%{strNombre}%'";
-            SqlCommand comandoProducto = new SqlCommand(consultaProductos, conexion);
-            SqlDataReader registroProductos = comandoProducto.ExecuteReader();
-            if (registroProductos.Read())
+            if (string.IsNullOrEmpty(strNombre))
             {
-                unProducto.IdProducto = int.Parse(registroProductos["id_producto"].ToString());
-                unProducto.Nombre = registroProductos["nombre"].ToString();
-                unProducto.Descripcion = registroProductos["descripcion"].ToString();
-                unProducto.Precio = decimal.Parse(registroProductos["precio"].ToString());
-                unProducto.Stock = int.Parse(registroProductos["stock"].ToString());
-                unProducto.Categoria = registroProductos["categoria"].ToString();
-                unProducto.Marca = registroProductos["marca"].ToString();
+                MessageBox.Show("Introduzca una palabra clave para buscar el producto.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                conexion.Close();
+            var consultaProductos = "SELECT * FROM VistaInventario WHERE nombre_producto LIKE @nombre";
+            var comandoProducto = new SqlCommand(consultaProductos, conexion);
+            comandoProducto.Parameters.AddWithValue("@nombre", "%" + strNombre + "%");
+            var adaptador = new SqlDataAdapter();
+            adaptador.SelectCommand = comandoProducto;
+            var dataTable = new DataTable();
+            adaptador.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                dtgProductosInventario.DataSource = dataTable;
             }
             else
             {
-                MessageBox.Show("No existe un producto con ese id", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No existe un producto con ese nombre.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void ConsultarPorCategoria()
+        {
+            var strCategoria = comboBox1.Text.Trim();
+
+            if (string.IsNullOrEmpty(strCategoria))
+            {
+                MessageBox.Show("Seleccione una categoría para buscar el producto.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            SqlDataAdapter adaptador = new SqlDataAdapter();
+            var consultaProductos = "SELECT * FROM VistaInventario WHERE nombre_categoria LIKE @nombre_categoria";
+            var comandoProducto = new SqlCommand(consultaProductos, conexion);
+            comandoProducto.Parameters.AddWithValue("@nombre_categoria", "%" + strCategoria + "%");
+            var adaptador = new SqlDataAdapter();
             adaptador.SelectCommand = comandoProducto;
-            DataTable PRODUCTOS = new DataTable();
-            adaptador.Fill(PRODUCTOS);
-            dtgProductosInventario.DataSource = PRODUCTOS;
+            var dataTable = new DataTable();
+            adaptador.Fill(dataTable);
 
-            conexion.Close();
-            registroProductos.Close();
+            if (dataTable.Rows.Count > 0)
+            {
+                dtgProductosInventario.DataSource = dataTable;
+            }
+            else
+            {
+                MessageBox.Show("No existen productos en esa categoría.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         private void ConsultarPorMarca()
         {
-            //CONSULTA DE LOS PRODUCTOS============================================================================
-            Producto unProducto = new Producto();
-            conexion.Open();
+            var strMarca = comboBox2.Text.Trim();
 
-            string strMarca = txtBuscarProducto.Text;
-
-            string consultaProductos = "SELECT P.id_producto, P.nombre, P.descripcion, P.precio, P.stock, C.nombre AS categoria, M.nombre AS marca " +
-                "FROM Productos P " +
-                "JOIN Categorias C ON P.id_categoria = C.id_categoria " +
-                "JOIN Marcas M ON P.id_marca = M.id_marca " +
-                "WHERE M.nombre LIKE '%" + strMarca + "%'";
-            SqlCommand comandoProducto = new SqlCommand(consultaProductos, conexion);
-            SqlDataReader registroProductos = comandoProducto.ExecuteReader();
-            if (registroProductos.Read())
+            if (string.IsNullOrEmpty(strMarca))
             {
-                unProducto.IdProducto = int.Parse(registroProductos["id_producto"].ToString());
-                unProducto.Nombre = registroProductos["nombre"].ToString();
-                unProducto.Descripcion = registroProductos["descripcion"].ToString();
-                unProducto.Precio = decimal.Parse(registroProductos["precio"].ToString());
-                unProducto.Stock = int.Parse(registroProductos["stock"].ToString());
-                unProducto.Categoria = registroProductos["categoria"].ToString();
-                unProducto.Marca = registroProductos["marca"].ToString();
+                MessageBox.Show("Seleccione una marca para buscar el producto.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                conexion.Close();
+            var consultaProductos = "SELECT * FROM VistaInventario WHERE nombre_marca LIKE @nombre_marca";
+            var comandoProducto = new SqlCommand(consultaProductos, conexion);
+            comandoProducto.Parameters.AddWithValue("@nombre_marca", "%" + strMarca + "%");
+            var adaptador = new SqlDataAdapter();
+            adaptador.SelectCommand = comandoProducto;
+            var dataTable = new DataTable();
+            adaptador.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                dtgProductosInventario.DataSource = dataTable;
             }
             else
             {
-                MessageBox.Show("No existe un producto con ese id", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No existen productos de esa marca.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            SqlDataAdapter adaptador = new SqlDataAdapter();
-            adaptador.SelectCommand = comandoProducto;
-            DataTable PRODUCTOS = new DataTable();
-            adaptador.Fill(PRODUCTOS);
-            dtgProductosInventario.DataSource = PRODUCTOS;
-
-            conexion.Close();
-            registroProductos.Close();
         }
-        private void ConsultarPorCategoria()
-        {
-            //CONSULTA DE LOS PRODUCTOS============================================================================
-            Producto unProducto = new Producto();
-            conexion.Open();
 
-            string strCategoria = txtBuscarProducto.Text;
 
-            string consultaProductos = "SELECT P.id_producto, P.nombre, P.descripcion, P.precio, P.stock, C.nombre AS categoria, M.nombre AS marca " +
-               "FROM Productos P " +
-               "JOIN Categorias C ON P.id_categoria = C.id_categoria " +
-               "JOIN Marcas M ON P.id_marca = M.id_marca " +
-               "WHERE C.nombre LIKE '%" + strCategoria + "%'";
-            SqlCommand comandoProducto = new SqlCommand(consultaProductos, conexion);
-            SqlDataReader registroProductos = comandoProducto.ExecuteReader();
-            if (registroProductos.Read())
-            {
-                unProducto.IdProducto = int.Parse(registroProductos["id_producto"].ToString());
-                unProducto.Nombre = registroProductos["nombre"].ToString();
-                unProducto.Descripcion = registroProductos["descripcion"].ToString();
-                unProducto.Precio = decimal.Parse(registroProductos["precio"].ToString());
-                unProducto.Stock = int.Parse(registroProductos["stock"].ToString());
-                unProducto.Categoria = registroProductos["categoria"].ToString();
-                unProducto.Marca = registroProductos["marca"].ToString();
-
-                conexion.Close();
-            }
-            else
-            {
-                MessageBox.Show("No existe un producto con ese id", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            SqlDataAdapter adaptador = new SqlDataAdapter();
-            adaptador.SelectCommand = comandoProducto;
-            DataTable PRODUCTOS = new DataTable();
-            adaptador.Fill(PRODUCTOS);
-            dtgProductosInventario.DataSource = PRODUCTOS;
-
-            conexion.Close();
-            registroProductos.Close();
-        }
 
         private void txtBuscarAlumno_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void btnVerTodosProductos_Click(object sender, EventArgs e)
         {
-            conexion.Open();
-            //CONSULTA DE INVENTARIO
-            string query = "SELECT P.id_producto, P.nombre, P.descripcion, P.precio, P.stock, C.nombre AS categoria, M.nombre AS marca " +
-               "FROM Productos P " +
-               "JOIN Categorias C ON P.id_categoria = C.id_categoria " +
-               "JOIN Marcas M ON P.id_marca = M.id_marca";
-            SqlDataAdapter adapter = new SqlDataAdapter(query, conexion);
-            DataTable dataTable = new DataTable();
-            adapter.Fill(dataTable);
-
-            // Asigna el DataTable al DataGridView control para mostrar los datos en la tabla
-            dtgProductosInventario.DataSource = dataTable;
-            conexion.Close();
+            
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Form.ActiveForm.Visible = false;
-            Login Login = new Login();
+            ActiveForm.Visible = false;
+            var Login = new Login();
             Login.Show();
         }
 
         private void btnEliminarProducto_Click(object sender, EventArgs e)
         {
-            string idProducto = "";
-            DataGridViewRow renglonSeleccionado = dtgProductosInventario.CurrentRow;
-            if (renglonSeleccionado == null)
+            var selectedRow = dtgProductosInventario.CurrentRow;
+            if (selectedRow == null)
             {
-                MessageBox.Show("Seleccione un renglon", "ERROR", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
-
+                MessageBox.Show("Seleccione un producto para eliminar.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
+
+            var productoId = selectedRow.Cells["id_producto"].Value.ToString();
+
+            if (MessageBox.Show("¿Desea eliminar el producto seleccionado?", "ELIMINAR PRODUCTO", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 try
                 {
-                    idProducto = renglonSeleccionado.Cells[0].Value.ToString();
+                    conexion.Open();
+                    var eliminarProductoQuery = "DELETE FROM Productos WHERE id_producto = @productoId";
+                    var eliminarProductoCommand = new SqlCommand(eliminarProductoQuery, conexion);
+                    eliminarProductoCommand.Parameters.AddWithValue("@productoId", productoId);
+                    eliminarProductoCommand.ExecuteNonQuery();
+                    MessageBox.Show("Producto eliminado correctamente.");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Seleccione un renglon", "ERROR", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show("Error al eliminar el producto: " + ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-
-                if (MessageBox.Show("¿Desea eliminar el producto seleccionado?", "ELIMINAR PRODUCTO", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                finally
                 {
-                    string scriptEliminar = "delete from Productos where id_producto = " + idProducto;
-                    conexion.Open();
-                    SqlCommand comandoEliminarAlumno = new SqlCommand(scriptEliminar, conexion);
-                    comandoEliminarAlumno.ExecuteNonQuery();
-                    MessageBox.Show("Producto Eliminado correctamente");
-
-                    SqlCommand comandoMostrarProductos = new SqlCommand("SELECT P.id_producto, P.nombre, P.descripcion, P.precio, P.stock, C.nombre AS categoria, M.nombre AS marca " +
-                        "FROM Productos P " +
-                        "JOIN Categorias C ON P.id_categoria = C.id_categoria " +
-                        "JOIN Marcas M ON P.id_marca = M.id_marca", conexion);
-                    SqlDataAdapter adaptador = new SqlDataAdapter();
-                    adaptador.SelectCommand = comandoMostrarProductos;
-                    DataTable PRODUCTOS = new DataTable();
-                    adaptador.Fill(PRODUCTOS);
-                    dtgProductosInventario.DataSource = PRODUCTOS;
                     conexion.Close();
                 }
-                else
-                {
-                    MessageBox.Show("Operación cancelada", "ELIMINACION FALLIDA", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+
+                MostrarTabla();
+            }
+            else
+            {
+                MessageBox.Show("Operación cancelada.", "ELIMINACIÓN CANCELADA", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void btnExportarInventario_Click(object sender, EventArgs e)
         {
-            List<Producto> productos = new List<Producto>();
 
-            // Conexión y consulta a la base de datos
-            string connectionString = "tu_cadena_de_conexión";
-            string query = "SELECT P.id_producto, P.nombre, P.descripcion, P.precio, P.stock, C.nombre AS categoria, M.nombre AS marca " +
-                "FROM Productos P " +
-                "JOIN Categorias C ON P.id_categoria = C.id_categoria " +
-                "JOIN Marcas M ON P.id_marca = M.id_marca";
-
-            using (SqlCommand command = new SqlCommand(query, conexion))
-            {
-                conexion.Open();
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Producto producto = new Producto();
-
-                        producto.IdProducto = reader.GetInt32(0);
-                        producto.Nombre = reader.GetString(1);
-                        producto.Descripcion = reader.GetString(2);
-                        producto.Precio = reader.GetDecimal(3);
-                        producto.Stock = reader.GetInt32(4);
-                        producto.Categoria = reader.GetString(5);
-                        producto.Marca = reader.GetString(6);
-
-                        productos.Add(producto);
-                    }
-                }
-                conexion.Close();
-            }
-
-            // Llamar al método GenerarPDF pasando la lista de productos
-            GenerarPDF(productos);
         }
 
         public void GenerarPDF(List<Producto> productos)
         {
-            // Crear el documento PDF
-            Document document = new Document();
-            string NombreArchivo = "Inventario " + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".pdf";
-            // Especificar la ruta y el nombre del archivo PDF
-            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), NombreArchivo);
-
-            // Crear un objeto PdfWriter para escribir en el archivo PDF
-            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
-
-            // Abrir el documento PDF
-            document.Open();
-
-            // Crear una tabla para mostrar los datos de los productos
-            PdfPTable table = new PdfPTable(5); // 5 columnas para los datos de los productos
-
-            // Añadir las cabeceras de las columnas
-            table.AddCell("ID");
-            table.AddCell("Nombre");
-            table.AddCell("Descripción");
-            table.AddCell("Precio");
-            table.AddCell("Stock");
-
-            // Recorrer la lista de productos y añadir cada producto a la tabla
-            foreach (Producto producto in productos)
-            {
-                table.AddCell(producto.IdProducto.ToString());
-                table.AddCell(producto.Nombre);
-                table.AddCell(producto.Descripcion);
-                table.AddCell(producto.Precio.ToString());
-                table.AddCell(producto.Stock.ToString());
-            }
-
-            // Añadir la tabla al documento
-            document.Add(table);
-
-            // Cerrar el documento PDF
-            document.Close();
-
-            // Abrir el archivo PDF con el visor predeterminado
-            Process.Start(filePath);
-
+           
         }
 
         private void btnAgregarProducto_Click(object sender, EventArgs e)
         {
-            CreateProducto CreateProducto = new CreateProducto();
-            CreateProducto.Show();
+
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            string idProducto = "";
-            DataGridViewRow renglonSeleccionado = dtgProductosInventario.CurrentRow;
-            if (renglonSeleccionado == null)
-            {
-                MessageBox.Show("Seleccione un renglon", "ERROR", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
-
-            }
-            else
-            {
-                try
-                {
-                    idProducto = renglonSeleccionado.Cells[0].Value.ToString();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Seleccione un renglon", "ERROR", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
-                }
-
-                conexion.Open();
-                string consulta = "SELECT P.id_producto, P.nombre, P.descripcion, P.precio, P.stock, C.nombre AS categoria, M.nombre AS marca " +
-                                  "FROM Productos P " +
-                                  "JOIN Categorias C ON P.id_categoria = C.id_categoria " +
-                                  "JOIN Marcas M ON P.id_marca = M.id_marca " +
-                                  "WHERE P.id_producto = @idProducto";
-                SqlCommand command = new SqlCommand(consulta, conexion);
-                command.Parameters.AddWithValue("@idProducto", idProducto);
-
-                // Ejecutar la consulta y obtener el resultado en un SqlDataReader
-                SqlDataReader reader = command.ExecuteReader();
-
-                // Verificar si hay filas en el resultado
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        ModificarProducto ModificarProducto = new ModificarProducto();
-                        // Obtener los valores de las columnas y asignarlos a variables
-                        int idProductoObtenido = reader.GetInt32(reader.GetOrdinal("id_producto"));
-                        string nombreProductoObtenido = reader.GetString(reader.GetOrdinal("nombre"));
-                        string descripcionProductoObtenido = reader.GetString(reader.GetOrdinal("descripcion"));
-                        decimal precioProductoObtenido = reader.GetDecimal(reader.GetOrdinal("precio"));
-                        int stockProductoObtenido = reader.GetInt32(reader.GetOrdinal("stock"));
-                        string marcaProductoObtenido = reader.GetString(reader.GetOrdinal("marca"));
-                        string categoriaProductoObtenido = reader.GetString(reader.GetOrdinal("categoria"));
-
-                        ModificarProducto.lblId.Text = idProductoObtenido.ToString();
-                        ModificarProducto.txtNombre.Text = nombreProductoObtenido;
-                        ModificarProducto.txtDescripcion.Text = descripcionProductoObtenido;
-                        ModificarProducto.txtPrecio2.Text = precioProductoObtenido.ToString();
-                        ModificarProducto.txtStock2.Text = stockProductoObtenido.ToString();
-                        ModificarProducto.cmbMarca2.Text = marcaProductoObtenido;
-                        ModificarProducto.cmbCategoria2.Text = categoriaProductoObtenido;
-                        ModificarProducto.Show();
-
-                        // Hacer algo con los valores obtenidos...
-                    }
-                }
-                else
-                {
-                    // No se encontró ninguna fila que coincida con el criterio de búsqueda
-                }
-
-                // Cerrar el SqlDataReader
-                reader.Close();
-                conexion.Close();
-            }
-
+            
         }
     }
 }

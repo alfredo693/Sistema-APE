@@ -21,18 +21,12 @@ namespace Sistema_APE
 
         private void btnInventario_Click(object sender, EventArgs e)
         {
-            // Crear una instancia del formulario que deseas mostrar
             Inventario Inventario = new Inventario();
-
-            // Establecer la propiedad TopLevel del formulario en false para que se pueda mostrar dentro de otro control
             Inventario.TopLevel = false;
+            Inventario.FormBorderStyle = FormBorderStyle.None;
 
             PanelContenedor.Controls.Clear();
-
-            // Agregar el formulario al panel
             PanelContenedor.Controls.Add(Inventario);
-
-            // Mostrar el formulario dentro del panel
             Inventario.Show();
         }
 
@@ -43,7 +37,7 @@ namespace Sistema_APE
 
         private void Main_Load(object sender, EventArgs e)
         {
-
+            PanelContenedor.Size = ClientSize;
         }
 
         private void picCerrar_Click(object sender, EventArgs e)

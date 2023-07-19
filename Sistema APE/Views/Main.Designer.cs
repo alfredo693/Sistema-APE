@@ -53,18 +53,19 @@
             this.panel1.Controls.Add(this.btnCompras);
             this.panel1.Controls.Add(this.btnCaja);
             this.panel1.Controls.Add(this.btnInventario);
-            this.panel1.Location = new System.Drawing.Point(-5, 56);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(0, 46);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(369, 1008);
+            this.panel1.Size = new System.Drawing.Size(278, 594);
             this.panel1.TabIndex = 6;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Sistema_APE.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(5, 384);
+            this.pictureBox1.Location = new System.Drawing.Point(4, 312);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(348, 228);
+            this.pictureBox1.Size = new System.Drawing.Size(261, 185);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
@@ -77,10 +78,9 @@
             this.btnCerrarSesion.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCerrarSesion.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnCerrarSesion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(4, 673);
-            this.btnCerrarSesion.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCerrarSesion.Location = new System.Drawing.Point(3, 547);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(52, 59);
+            this.btnCerrarSesion.Size = new System.Drawing.Size(39, 48);
             this.btnCerrarSesion.TabIndex = 5;
             this.btnCerrarSesion.UseVisualStyleBackColor = true;
             // 
@@ -92,10 +92,9 @@
             this.btnCompras.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCompras.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnCompras.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCompras.Location = new System.Drawing.Point(5, 247);
-            this.btnCompras.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCompras.Location = new System.Drawing.Point(4, 201);
             this.btnCompras.Name = "btnCompras";
-            this.btnCompras.Size = new System.Drawing.Size(345, 80);
+            this.btnCompras.Size = new System.Drawing.Size(259, 65);
             this.btnCompras.TabIndex = 3;
             this.btnCompras.Text = "Compras";
             this.btnCompras.UseVisualStyleBackColor = true;
@@ -109,10 +108,9 @@
             this.btnCaja.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCaja.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnCaja.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCaja.Location = new System.Drawing.Point(5, 139);
-            this.btnCaja.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCaja.Location = new System.Drawing.Point(4, 113);
             this.btnCaja.Name = "btnCaja";
-            this.btnCaja.Size = new System.Drawing.Size(348, 81);
+            this.btnCaja.Size = new System.Drawing.Size(261, 66);
             this.btnCaja.TabIndex = 3;
             this.btnCaja.Text = "Caja";
             this.btnCaja.UseVisualStyleBackColor = true;
@@ -126,10 +124,9 @@
             this.btnInventario.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInventario.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnInventario.Image = ((System.Drawing.Image)(resources.GetObject("btnInventario.Image")));
-            this.btnInventario.Location = new System.Drawing.Point(1, 42);
-            this.btnInventario.Margin = new System.Windows.Forms.Padding(4);
+            this.btnInventario.Location = new System.Drawing.Point(1, 34);
             this.btnInventario.Name = "btnInventario";
-            this.btnInventario.Size = new System.Drawing.Size(348, 80);
+            this.btnInventario.Size = new System.Drawing.Size(261, 65);
             this.btnInventario.TabIndex = 0;
             this.btnInventario.Text = "Inventario";
             this.btnInventario.UseVisualStyleBackColor = true;
@@ -137,18 +134,22 @@
             // 
             // PanelContenedor
             // 
-            this.PanelContenedor.Location = new System.Drawing.Point(357, 56);
+            this.PanelContenedor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PanelContenedor.Location = new System.Drawing.Point(278, 46);
+            this.PanelContenedor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.PanelContenedor.Name = "PanelContenedor";
-            this.PanelContenedor.Size = new System.Drawing.Size(1579, 1008);
+            this.PanelContenedor.Size = new System.Drawing.Size(762, 594);
             this.PanelContenedor.TabIndex = 8;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(92)))), ((int)(((byte)(249)))));
             this.panel2.Controls.Add(this.picCerrar);
-            this.panel2.Location = new System.Drawing.Point(2, -1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1934, 56);
+            this.panel2.Size = new System.Drawing.Size(1040, 46);
             this.panel2.TabIndex = 9;
             // 
             // picCerrar
@@ -158,10 +159,9 @@
             this.picCerrar.ErrorImage = ((System.Drawing.Image)(resources.GetObject("picCerrar.ErrorImage")));
             this.picCerrar.Image = ((System.Drawing.Image)(resources.GetObject("picCerrar.Image")));
             this.picCerrar.InitialImage = ((System.Drawing.Image)(resources.GetObject("picCerrar.InitialImage")));
-            this.picCerrar.Location = new System.Drawing.Point(1894, 14);
-            this.picCerrar.Margin = new System.Windows.Forms.Padding(4);
+            this.picCerrar.Location = new System.Drawing.Point(1010, 11);
             this.picCerrar.Name = "picCerrar";
-            this.picCerrar.Size = new System.Drawing.Size(33, 31);
+            this.picCerrar.Size = new System.Drawing.Size(25, 25);
             this.picCerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picCerrar.TabIndex = 7;
             this.picCerrar.TabStop = false;
@@ -169,17 +169,17 @@
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1942, 1102);
-            this.Controls.Add(this.panel2);
+            this.ClientSize = new System.Drawing.Size(1040, 640);
             this.Controls.Add(this.PanelContenedor);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Main_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
