@@ -30,15 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnPedidos = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnCerrarSesion = new System.Windows.Forms.Button();
-            this.btnCompras = new System.Windows.Forms.Button();
             this.btnCaja = new System.Windows.Forms.Button();
             this.btnInventario = new System.Windows.Forms.Button();
             this.PanelContenedor = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.picCerrar = new System.Windows.Forms.PictureBox();
-            this.btnPedidos = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -52,7 +51,6 @@
             this.panel1.Controls.Add(this.btnPedidos);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.btnCerrarSesion);
-            this.panel1.Controls.Add(this.btnCompras);
             this.panel1.Controls.Add(this.btnCaja);
             this.panel1.Controls.Add(this.btnInventario);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -61,13 +59,29 @@
             this.panel1.Size = new System.Drawing.Size(278, 594);
             this.panel1.TabIndex = 6;
             // 
+            // btnPedidos
+            // 
+            this.btnPedidos.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnPedidos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnPedidos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPedidos.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPedidos.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnPedidos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPedidos.Location = new System.Drawing.Point(-2, 177);
+            this.btnPedidos.Name = "btnPedidos";
+            this.btnPedidos.Size = new System.Drawing.Size(278, 65);
+            this.btnPedidos.TabIndex = 8;
+            this.btnPedidos.Text = "Pedidos";
+            this.btnPedidos.UseVisualStyleBackColor = true;
+            this.btnPedidos.Click += new System.EventHandler(this.btnPedidos_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Sistema_APE.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(4, 396);
+            this.pictureBox1.Location = new System.Drawing.Point(-2, 404);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(261, 185);
+            this.pictureBox1.Size = new System.Drawing.Size(274, 184);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
@@ -86,22 +100,6 @@
             this.btnCerrarSesion.TabIndex = 5;
             this.btnCerrarSesion.UseVisualStyleBackColor = true;
             // 
-            // btnCompras
-            // 
-            this.btnCompras.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnCompras.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnCompras.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCompras.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCompras.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnCompras.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCompras.Location = new System.Drawing.Point(4, 201);
-            this.btnCompras.Name = "btnCompras";
-            this.btnCompras.Size = new System.Drawing.Size(259, 65);
-            this.btnCompras.TabIndex = 3;
-            this.btnCompras.Text = "Compras";
-            this.btnCompras.UseVisualStyleBackColor = true;
-            this.btnCompras.Click += new System.EventHandler(this.btnCompras_Click);
-            // 
             // btnCaja
             // 
             this.btnCaja.FlatAppearance.BorderColor = System.Drawing.Color.White;
@@ -110,9 +108,9 @@
             this.btnCaja.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCaja.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnCaja.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCaja.Location = new System.Drawing.Point(4, 113);
+            this.btnCaja.Location = new System.Drawing.Point(-2, 105);
             this.btnCaja.Name = "btnCaja";
-            this.btnCaja.Size = new System.Drawing.Size(261, 66);
+            this.btnCaja.Size = new System.Drawing.Size(278, 66);
             this.btnCaja.TabIndex = 3;
             this.btnCaja.Text = "Caja";
             this.btnCaja.UseVisualStyleBackColor = true;
@@ -126,9 +124,9 @@
             this.btnInventario.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInventario.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnInventario.Image = ((System.Drawing.Image)(resources.GetObject("btnInventario.Image")));
-            this.btnInventario.Location = new System.Drawing.Point(1, 34);
+            this.btnInventario.Location = new System.Drawing.Point(-2, 34);
             this.btnInventario.Name = "btnInventario";
-            this.btnInventario.Size = new System.Drawing.Size(261, 65);
+            this.btnInventario.Size = new System.Drawing.Size(278, 65);
             this.btnInventario.TabIndex = 0;
             this.btnInventario.Text = "Inventario";
             this.btnInventario.UseVisualStyleBackColor = true;
@@ -169,22 +167,6 @@
             this.picCerrar.TabStop = false;
             this.picCerrar.Click += new System.EventHandler(this.picCerrar_Click_1);
             // 
-            // btnPedidos
-            // 
-            this.btnPedidos.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnPedidos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnPedidos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPedidos.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPedidos.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnPedidos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPedidos.Location = new System.Drawing.Point(4, 272);
-            this.btnPedidos.Name = "btnPedidos";
-            this.btnPedidos.Size = new System.Drawing.Size(259, 65);
-            this.btnPedidos.TabIndex = 8;
-            this.btnPedidos.Text = "Pedidos";
-            this.btnPedidos.UseVisualStyleBackColor = true;
-            this.btnPedidos.Click += new System.EventHandler(this.btnPedidos_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -210,7 +192,6 @@
         #endregion
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnCerrarSesion;
-        private System.Windows.Forms.Button btnCompras;
         private System.Windows.Forms.Button btnCaja;
         private System.Windows.Forms.Button btnInventario;
         private System.Windows.Forms.PictureBox pictureBox1;

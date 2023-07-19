@@ -33,18 +33,15 @@
             this.btnVerTodosProductos = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.grpBusqueda = new System.Windows.Forms.GroupBox();
+            this.radMarca = new System.Windows.Forms.RadioButton();
+            this.radCategoria = new System.Windows.Forms.RadioButton();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.radNombre = new System.Windows.Forms.RadioButton();
             this.radId = new System.Windows.Forms.RadioButton();
             this.btnBuscarProducto = new System.Windows.Forms.Button();
             this.txtBuscarProducto = new System.Windows.Forms.TextBox();
-            this.btnEliminarProducto = new System.Windows.Forms.Button();
             this.btnExportarInventario = new System.Windows.Forms.Button();
-            this.btnAgregarProducto = new System.Windows.Forms.Button();
-            this.btnModificar = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.radCategoria = new System.Windows.Forms.RadioButton();
-            this.radMarca = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dtgProductosInventario)).BeginInit();
             this.grpBusqueda.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +50,7 @@
             // 
             this.dtgProductosInventario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgProductosInventario.Location = new System.Drawing.Point(11, 197);
-            this.dtgProductosInventario.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtgProductosInventario.Margin = new System.Windows.Forms.Padding(2);
             this.dtgProductosInventario.Name = "dtgProductosInventario";
             this.dtgProductosInventario.RowHeadersWidth = 51;
             this.dtgProductosInventario.RowTemplate.Height = 24;
@@ -74,8 +71,8 @@
             // btnVerTodosProductos
             // 
             this.btnVerTodosProductos.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVerTodosProductos.Location = new System.Drawing.Point(472, 45);
-            this.btnVerTodosProductos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnVerTodosProductos.Location = new System.Drawing.Point(246, 108);
+            this.btnVerTodosProductos.Margin = new System.Windows.Forms.Padding(2);
             this.btnVerTodosProductos.Name = "btnVerTodosProductos";
             this.btnVerTodosProductos.Size = new System.Drawing.Size(222, 40);
             this.btnVerTodosProductos.TabIndex = 52;
@@ -87,7 +84,7 @@
             // 
             this.btnSalir.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalir.Location = new System.Drawing.Point(850, 648);
-            this.btnSalir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSalir.Margin = new System.Windows.Forms.Padding(2);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(128, 61);
             this.btnSalir.TabIndex = 51;
@@ -111,6 +108,44 @@
             this.grpBusqueda.TabIndex = 50;
             this.grpBusqueda.TabStop = false;
             this.grpBusqueda.Text = "Buscar Producto";
+            // 
+            // radMarca
+            // 
+            this.radMarca.AutoSize = true;
+            this.radMarca.Location = new System.Drawing.Point(6, 126);
+            this.radMarca.Name = "radMarca";
+            this.radMarca.Size = new System.Drawing.Size(55, 17);
+            this.radMarca.TabIndex = 8;
+            this.radMarca.Text = "Marca";
+            this.radMarca.UseVisualStyleBackColor = true;
+            // 
+            // radCategoria
+            // 
+            this.radCategoria.AutoSize = true;
+            this.radCategoria.Location = new System.Drawing.Point(6, 103);
+            this.radCategoria.Name = "radCategoria";
+            this.radCategoria.Size = new System.Drawing.Size(70, 17);
+            this.radCategoria.TabIndex = 7;
+            this.radCategoria.Text = "Categoria";
+            this.radCategoria.UseVisualStyleBackColor = true;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(82, 126);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 6;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(82, 102);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 5;
             // 
             // radNombre
             // 
@@ -152,23 +187,11 @@
             this.txtBuscarProducto.TabIndex = 0;
             this.txtBuscarProducto.TextChanged += new System.EventHandler(this.txtBuscarAlumno_TextChanged);
             // 
-            // btnEliminarProducto
-            // 
-            this.btnEliminarProducto.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarProducto.Location = new System.Drawing.Point(246, 133);
-            this.btnEliminarProducto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnEliminarProducto.Name = "btnEliminarProducto";
-            this.btnEliminarProducto.Size = new System.Drawing.Size(222, 40);
-            this.btnEliminarProducto.TabIndex = 49;
-            this.btnEliminarProducto.Text = "Eliminar Producto";
-            this.btnEliminarProducto.UseVisualStyleBackColor = true;
-            this.btnEliminarProducto.Click += new System.EventHandler(this.btnEliminarProducto_Click);
-            // 
             // btnExportarInventario
             // 
             this.btnExportarInventario.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportarInventario.Location = new System.Drawing.Point(472, 89);
-            this.btnExportarInventario.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnExportarInventario.Location = new System.Drawing.Point(246, 152);
+            this.btnExportarInventario.Margin = new System.Windows.Forms.Padding(2);
             this.btnExportarInventario.Name = "btnExportarInventario";
             this.btnExportarInventario.Size = new System.Drawing.Size(222, 40);
             this.btnExportarInventario.TabIndex = 54;
@@ -176,85 +199,20 @@
             this.btnExportarInventario.UseVisualStyleBackColor = true;
             this.btnExportarInventario.Click += new System.EventHandler(this.btnExportarInventario_Click);
             // 
-            // btnAgregarProducto
-            // 
-            this.btnAgregarProducto.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregarProducto.Location = new System.Drawing.Point(246, 45);
-            this.btnAgregarProducto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnAgregarProducto.Name = "btnAgregarProducto";
-            this.btnAgregarProducto.Size = new System.Drawing.Size(222, 40);
-            this.btnAgregarProducto.TabIndex = 55;
-            this.btnAgregarProducto.Text = "Agregar Producto";
-            this.btnAgregarProducto.UseVisualStyleBackColor = true;
-            this.btnAgregarProducto.Click += new System.EventHandler(this.btnAgregarProducto_Click);
-            // 
-            // btnModificar
-            // 
-            this.btnModificar.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificar.Location = new System.Drawing.Point(246, 89);
-            this.btnModificar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(222, 40);
-            this.btnModificar.TabIndex = 56;
-            this.btnModificar.Text = "Modificar Producto";
-            this.btnModificar.UseVisualStyleBackColor = true;
-            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(82, 102);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 5;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(82, 126);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 6;
-            // 
-            // radCategoria
-            // 
-            this.radCategoria.AutoSize = true;
-            this.radCategoria.Location = new System.Drawing.Point(6, 103);
-            this.radCategoria.Name = "radCategoria";
-            this.radCategoria.Size = new System.Drawing.Size(70, 17);
-            this.radCategoria.TabIndex = 7;
-            this.radCategoria.Text = "Categoria";
-            this.radCategoria.UseVisualStyleBackColor = true;
-            // 
-            // radMarca
-            // 
-            this.radMarca.AutoSize = true;
-            this.radMarca.Location = new System.Drawing.Point(6, 126);
-            this.radMarca.Name = "radMarca";
-            this.radMarca.Size = new System.Drawing.Size(55, 17);
-            this.radMarca.TabIndex = 8;
-            this.radMarca.Text = "Marca";
-            this.radMarca.UseVisualStyleBackColor = true;
-            // 
             // Inventario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(762, 594);
-            this.Controls.Add(this.btnModificar);
-            this.Controls.Add(this.btnAgregarProducto);
             this.Controls.Add(this.btnExportarInventario);
             this.Controls.Add(this.lblAlumnosInscritos);
             this.Controls.Add(this.btnVerTodosProductos);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.grpBusqueda);
-            this.Controls.Add(this.btnEliminarProducto);
             this.Controls.Add(this.dtgProductosInventario);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Inventario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inventario";
@@ -276,10 +234,7 @@
         private System.Windows.Forms.RadioButton radId;
         private System.Windows.Forms.Button btnBuscarProducto;
         private System.Windows.Forms.TextBox txtBuscarProducto;
-        private System.Windows.Forms.Button btnEliminarProducto;
         private System.Windows.Forms.Button btnExportarInventario;
-        private System.Windows.Forms.Button btnAgregarProducto;
-        private System.Windows.Forms.Button btnModificar;
         public System.Windows.Forms.DataGridView dtgProductosInventario;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox1;
