@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Sistema_APE.Models
 {
-    public class Pedido
+    public class DetallePedido
     {
-        public int IdPedido { get; set; }
         public int IdProducto { get; set; }
         public int Cantidad { get; set; }
-        public DateTime FechaPedido { get; set; }
-        public int CantidadTotal { get; set; }
+        public string NombreProducto { get; set; }
+        public decimal PrecioUnitario { get; set; }
     }
+
 }

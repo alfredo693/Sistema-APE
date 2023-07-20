@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Departamento.cs" />
+    <Compile Include="Models\DetallePedido.cs" />
     <Compile Include="Models\DetalleVenta.cs" />
     <Compile Include="Models\Empleado.cs" />
     <Compile Include="Models\Inventario.cs" />

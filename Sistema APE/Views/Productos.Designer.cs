@@ -35,9 +35,9 @@
             // dtgProductos
             // 
             this.dtgProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgProductos.Location = new System.Drawing.Point(12, 100);
+            this.dtgProductos.Location = new System.Drawing.Point(12, 12);
             this.dtgProductos.Name = "dtgProductos";
-            this.dtgProductos.Size = new System.Drawing.Size(394, 302);
+            this.dtgProductos.Size = new System.Drawing.Size(394, 390);
             this.dtgProductos.TabIndex = 0;
             this.dtgProductos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgProductos_CellDoubleClick);
             // 

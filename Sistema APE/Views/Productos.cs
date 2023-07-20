@@ -57,22 +57,57 @@ namespace Sistema_APE.Views
 
         private void dtgProductos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                int idProducto = Convert.ToInt32(dtgProductos.Rows[e.RowIndex].Cells["id_producto"].Value);
-                string nombreProducto = dtgProductos.Rows[e.RowIndex].Cells["nombre"].Value.ToString();
+            int idProductoSeleccionado = int.Parse(dtgProductos.SelectedRows[0].Cells["id_producto"].Value.ToString());
 
-                Pedidos frmPedidos = Application.OpenForms["Pedidos"] as Pedidos;
+            // Obtener los datos completos del producto desde la base de datos
+            Producto productoSeleccionado = ObtenerProductoPorID(idProductoSeleccionado);
 
-                if (frmPedidos != null)
-                {
-                    // Actualizar los TextBoxes del formulario "Pedidos" con los nuevos datos
-                    frmPedidos.IdProducto = idProducto;
-                    frmPedidos.NombreProducto = nombreProducto;
-                }
+            // Enviar el objeto Producto al formulario Pedidos
+            Pedidos formPedidos = (Pedidos)Application.OpenForms["Pedidos"];
+            formPedidos.AgregarProducto(productoSeleccionado);
 
-                this.Hide();
-            }
+            // Asignar el precio unitario del producto seleccionado al formulario Pedidos
+            formPedidos.PrecioUnitario = productoSeleccionado.Precio;
+
+            // Cerrar el formulario Productos (opcional)
+            this.Close();
         }
+
+        private Producto ObtenerProductoPorID(int idProducto)
+        {
+            Producto producto = null;
+
+            using (SqlConnection conexion = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM productos WHERE id_producto = @id_producto";
+
+                using (SqlCommand command = new SqlCommand(query, conexion))
+                {
+                    command.Parameters.AddWithValue("@id_producto", idProducto);
+                    conexion.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        producto = new Producto
+                        {
+                            IdProducto = int.Parse(reader["id_producto"].ToString()),
+                            Nombre = reader["nombre"].ToString(),
+                            Descripcion = reader["descripcion"].ToString(),
+                            IdCategoria = int.Parse(reader["id_categoria"].ToString()),
+                            IdMarca = int.Parse(reader["id_marca"].ToString()),
+                            Precio = decimal.Parse(reader["precio"].ToString())
+                        };
+                    }
+
+                    reader.Close();
+                    conexion.Close();
+                }
+            }
+
+            return producto;
+        }
+
+
     }
 }
