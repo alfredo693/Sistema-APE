@@ -39,6 +39,7 @@
             this.dtgProductos.Name = "dtgProductos";
             this.dtgProductos.Size = new System.Drawing.Size(394, 302);
             this.dtgProductos.TabIndex = 0;
+            this.dtgProductos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgProductos_CellDoubleClick);
             // 
             // Productos
             // 

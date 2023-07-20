@@ -20,9 +20,25 @@ namespace Sistema_APE.Views
             InitializeComponent();
         }
 
+        public int IdProducto
+        {
+            get { return Convert.ToInt32(txtIdProducto.Text); }
+            set { txtIdProducto.Text = value.ToString(); }
+        }
+
+        public string NombreProducto
+        {
+            get { return txtProducto.Text; }
+            set { txtProducto.Text = value; }
+        }
+
         private void Pedidos_Load(object sender, EventArgs e)
         {
             MostrarPedidos();
+
+            dtgProductos.Columns[0].HeaderText = "ID Producto";
+            dtgProductos.Columns[1].HeaderText = "Producto";
+            dtgProductos.Columns[2].HeaderText = "Cantidad";
 
             dtgPedidos.ReadOnly = true;
             dtgPedidos.AllowUserToAddRows = false;
@@ -53,8 +69,9 @@ namespace Sistema_APE.Views
             Productos productos = new Productos();
             productos.Show();
         }
+        
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnAgregar_Click(object sender, EventArgs e)
         {
 
         }

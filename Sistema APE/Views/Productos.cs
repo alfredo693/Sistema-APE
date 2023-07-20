@@ -23,6 +23,14 @@ namespace Sistema_APE.Views
         private void Productos_Load(object sender, EventArgs e)
         {
             MostrarTablaProductos();
+
+            dtgProductos.Columns[0].HeaderText = "ID";
+            dtgProductos.Columns[1].HeaderText = "Nombre";
+            dtgProductos.Columns[2].HeaderText = "Precio";
+            dtgProductos.Columns[3].HeaderText = "Categoría";
+            dtgProductos.Columns[4].HeaderText = "Marca";
+
+
             dtgProductos.ReadOnly = true;
             dtgProductos.AllowUserToAddRows = false;
             dtgProductos.AllowUserToDeleteRows = false;
@@ -45,6 +53,26 @@ namespace Sistema_APE.Views
 
             dtgProductos.DataSource = dataTable;
             conexion.Close();
+        }
+
+        private void dtgProductos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                int idProducto = Convert.ToInt32(dtgProductos.Rows[e.RowIndex].Cells["id_producto"].Value);
+                string nombreProducto = dtgProductos.Rows[e.RowIndex].Cells["nombre"].Value.ToString();
+
+                Pedidos frmPedidos = Application.OpenForms["Pedidos"] as Pedidos;
+
+                if (frmPedidos != null)
+                {
+                    // Actualizar los TextBoxes del formulario "Pedidos" con los nuevos datos
+                    frmPedidos.IdProducto = idProducto;
+                    frmPedidos.NombreProducto = nombreProducto;
+                }
+
+                this.Hide();
+            }
         }
     }
 }

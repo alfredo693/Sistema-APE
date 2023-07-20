@@ -29,42 +29,47 @@
         private void InitializeComponent()
         {
             this.dtgPedidos = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtIdProducto = new System.Windows.Forms.TextBox();
+            this.txtProducto = new System.Windows.Forms.TextBox();
             this.btnBuscarProducto = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnGenrarPedido = new System.Windows.Forms.Button();
+            this.dtgProductos = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtCantidad = new System.Windows.Forms.TextBox();
+            this.btnAgregar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgPedidos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgProductos)).BeginInit();
             this.SuspendLayout();
             // 
             // dtgPedidos
             // 
             this.dtgPedidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgPedidos.Location = new System.Drawing.Point(12, 178);
+            this.dtgPedidos.Location = new System.Drawing.Point(12, 217);
             this.dtgPedidos.Name = "dtgPedidos";
-            this.dtgPedidos.Size = new System.Drawing.Size(738, 404);
+            this.dtgPedidos.Size = new System.Drawing.Size(738, 365);
             this.dtgPedidos.TabIndex = 0;
             // 
-            // textBox1
+            // txtIdProducto
             // 
-            this.textBox1.Location = new System.Drawing.Point(81, 33);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(71, 20);
-            this.textBox1.TabIndex = 1;
+            this.txtIdProducto.Location = new System.Drawing.Point(84, 12);
+            this.txtIdProducto.Name = "txtIdProducto";
+            this.txtIdProducto.Size = new System.Drawing.Size(71, 20);
+            this.txtIdProducto.TabIndex = 1;
             // 
-            // textBox2
+            // txtProducto
             // 
-            this.textBox2.Location = new System.Drawing.Point(81, 59);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(177, 20);
-            this.textBox2.TabIndex = 2;
+            this.txtProducto.Location = new System.Drawing.Point(84, 38);
+            this.txtProducto.Name = "txtProducto";
+            this.txtProducto.Size = new System.Drawing.Size(177, 20);
+            this.txtProducto.TabIndex = 2;
             // 
             // btnBuscarProducto
             // 
-            this.btnBuscarProducto.Location = new System.Drawing.Point(12, 85);
+            this.btnBuscarProducto.Location = new System.Drawing.Point(161, 12);
             this.btnBuscarProducto.Name = "btnBuscarProducto";
-            this.btnBuscarProducto.Size = new System.Drawing.Size(246, 23);
+            this.btnBuscarProducto.Size = new System.Drawing.Size(100, 20);
             this.btnBuscarProducto.TabIndex = 3;
             this.btnBuscarProducto.Text = "Buscar Producto";
             this.btnBuscarProducto.UseVisualStyleBackColor = true;
@@ -73,7 +78,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 36);
+            this.label1.Location = new System.Drawing.Point(15, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(64, 13);
             this.label1.TabIndex = 4;
@@ -82,7 +87,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 62);
+            this.label2.Location = new System.Drawing.Point(28, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(50, 13);
             this.label2.TabIndex = 5;
@@ -90,31 +95,69 @@
             // 
             // btnGenrarPedido
             // 
-            this.btnGenrarPedido.Location = new System.Drawing.Point(15, 130);
+            this.btnGenrarPedido.Location = new System.Drawing.Point(15, 155);
             this.btnGenrarPedido.Name = "btnGenrarPedido";
-            this.btnGenrarPedido.Size = new System.Drawing.Size(246, 42);
+            this.btnGenrarPedido.Size = new System.Drawing.Size(246, 56);
             this.btnGenrarPedido.TabIndex = 6;
             this.btnGenrarPedido.Text = "Generar Pedido";
             this.btnGenrarPedido.UseVisualStyleBackColor = true;
-            this.btnGenrarPedido.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // dtgProductos
+            // 
+            this.dtgProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgProductos.Location = new System.Drawing.Point(267, 12);
+            this.dtgProductos.Name = "dtgProductos";
+            this.dtgProductos.Size = new System.Drawing.Size(483, 199);
+            this.dtgProductos.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(28, 67);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(49, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Cantidad";
+            // 
+            // txtCantidad
+            // 
+            this.txtCantidad.Location = new System.Drawing.Point(84, 64);
+            this.txtCantidad.Name = "txtCantidad";
+            this.txtCantidad.Size = new System.Drawing.Size(177, 20);
+            this.txtCantidad.TabIndex = 8;
+            // 
+            // btnAgregar
+            // 
+            this.btnAgregar.Location = new System.Drawing.Point(18, 90);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(246, 37);
+            this.btnAgregar.TabIndex = 10;
+            this.btnAgregar.Text = "Agregar Producto";
+            this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // Pedidos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(762, 594);
+            this.Controls.Add(this.btnAgregar);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtCantidad);
+            this.Controls.Add(this.dtgProductos);
             this.Controls.Add(this.btnGenrarPedido);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnBuscarProducto);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtProducto);
+            this.Controls.Add(this.txtIdProducto);
             this.Controls.Add(this.dtgPedidos);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Pedidos";
             this.Text = "Pedidos";
             this.Load += new System.EventHandler(this.Pedidos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgPedidos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgProductos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,11 +166,15 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dtgPedidos;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtIdProducto;
+        private System.Windows.Forms.TextBox txtProducto;
         private System.Windows.Forms.Button btnBuscarProducto;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnGenrarPedido;
+        private System.Windows.Forms.DataGridView dtgProductos;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtCantidad;
+        private System.Windows.Forms.Button btnAgregar;
     }
 }
