@@ -7,17 +7,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sistema_APE.Models;
 using Sistema_APE.Views;
 
 namespace Sistema_APE
 {
     public partial class Main : Form
     {
-        private string nombreEmpleado;
-        public Main(string nombreEmpleado)
+        private readonly Empleado empleado;
+        public Main(Empleado empleado)
         {
             InitializeComponent();
-            this.nombreEmpleado = nombreEmpleado;
+            this.empleado = empleado;
+
+            if (empleado.IdRol == 1)
+            {
+                // Solo el rol 1 puede dar clic en el botón de caja
+                btnCaja.Enabled = true;
+                btnPedidos.Enabled = false;
+                btnInventario.Enabled = false;
+                btnEmpleados.Enabled =false;
+            }
+            else if (empleado.IdRol== 2)
+            {
+                // El rol 2 puede dar clic en los botones de caja, pedidos e inventario
+                btnCaja.Enabled = true;
+                btnPedidos.Enabled = true;
+                btnInventario.Enabled = true;
+                btnEmpleados.Enabled = false;
+            }
+            else if (empleado.IdRol == 3)
+            {
+                // El rol 3 puede dar clic en todos los botones
+                btnCaja.Enabled = true;
+                btnPedidos.Enabled = true;
+                btnInventario.Enabled = true;
+                btnEmpleados.Enabled = true;
+            }
+            else
+            {
+                // Si el rol no coincide con ninguno de los valores esperados, deshabilitar todos los botones por seguridad.
+                btnCaja.Enabled = false;
+                btnPedidos.Enabled = false;
+                btnInventario.Enabled = false;
+            }
         }
 
         private void btnInventario_Click(object sender, EventArgs e)
@@ -39,52 +72,18 @@ namespace Sistema_APE
         private void Main_Load(object sender, EventArgs e)
         {
             PanelContenedor.Size = ClientSize;
-        }
-
-        private void picCerrar_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
+            lblNombreEmpleado.Text = empleado.Nombre;
         }
 
         private void btnCaja_Click(object sender, EventArgs e)
         {
-            // Crear una instancia del formulario que deseas mostrar
             Caja Caja = new Caja();
-
-            // Establecer la propiedad TopLevel del formulario en false para que se pueda mostrar dentro de otro control
             Caja.TopLevel = false;
-
             PanelContenedor.Controls.Clear();
-
-            // Agregar el formulario al panel
             PanelContenedor.Controls.Add(Caja);
-
-            // Mostrar el formulario dentro del panel
             Caja.Show();
         }
-
-        private void btnCompras_Click(object sender, EventArgs e)
-        {
-            // Crear una instancia del formulario que deseas mostrar
-            Compras Compras = new Compras();
-
-            // Establecer la propiedad TopLevel del formulario en false para que se pueda mostrar dentro de otro control
-            Compras.TopLevel = false;
-
-            PanelContenedor.Controls.Clear();
-                
-            // Agregar el formulario al panel
-            PanelContenedor.Controls.Add(Compras);
-
-            // Mostrar el formulario dentro del panel
-            Compras.Show();
-        }
-
-        private void picCerrar_Click_1(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
+        
         private void btnPedidos_Click(object sender, EventArgs e)
         {
             Pedidos pedidos = new Pedidos();
@@ -92,6 +91,15 @@ namespace Sistema_APE
             PanelContenedor.Controls.Clear();
             PanelContenedor.Controls.Add(pedidos);
             pedidos.Show();
+        }
+
+        private void btnEmpleados_Click(object sender, EventArgs e)
+        {
+            Empleados empleado = new Empleados();
+            empleado.TopLevel = false;
+            PanelContenedor.Controls.Clear();
+            PanelContenedor.Controls.Add(empleado);
+            empleado.Show();
         }
     }
 }

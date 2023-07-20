@@ -15,5 +15,6 @@ namespace Sistema_APE.Models
         public string Direccion { get; set; }
         public decimal Salario { get; set; }
         public int IdDepartamento { get; set; }
+        public int IdRol { get; set; }
     }
 }

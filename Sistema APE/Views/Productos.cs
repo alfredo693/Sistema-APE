@@ -59,17 +59,13 @@ namespace Sistema_APE.Views
         {
             int idProductoSeleccionado = int.Parse(dtgProductos.SelectedRows[0].Cells["id_producto"].Value.ToString());
 
-            // Obtener los datos completos del producto desde la base de datos
             Producto productoSeleccionado = ObtenerProductoPorID(idProductoSeleccionado);
 
-            // Enviar el objeto Producto al formulario Pedidos
             Pedidos formPedidos = (Pedidos)Application.OpenForms["Pedidos"];
             formPedidos.AgregarProducto(productoSeleccionado);
 
-            // Asignar el precio unitario del producto seleccionado al formulario Pedidos
             formPedidos.PrecioUnitario = productoSeleccionado.Precio;
 
-            // Cerrar el formulario Productos (opcional)
             this.Close();
         }
 

@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblNombreEmpleado = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnEmpleados = new System.Windows.Forms.Button();
             this.btnPedidos = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnCerrarSesion = new System.Windows.Forms.Button();
@@ -44,6 +46,9 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.lblNombreEmpleado);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.btnEmpleados);
             this.panel1.Controls.Add(this.btnPedidos);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.btnCerrarSesion);
@@ -55,17 +60,53 @@
             this.panel1.Size = new System.Drawing.Size(278, 640);
             this.panel1.TabIndex = 6;
             // 
+            // lblNombreEmpleado
+            // 
+            this.lblNombreEmpleado.AutoSize = true;
+            this.lblNombreEmpleado.Location = new System.Drawing.Point(10, 30);
+            this.lblNombreEmpleado.Name = "lblNombreEmpleado";
+            this.lblNombreEmpleado.Size = new System.Drawing.Size(94, 13);
+            this.lblNombreEmpleado.TabIndex = 11;
+            this.lblNombreEmpleado.Text = "Nombre Empleado";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Empleado:";
+            // 
+            // btnEmpleados
+            // 
+            this.btnEmpleados.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEmpleados.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnEmpleados.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnEmpleados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEmpleados.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEmpleados.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnEmpleados.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEmpleados.Location = new System.Drawing.Point(-2, 312);
+            this.btnEmpleados.Name = "btnEmpleados";
+            this.btnEmpleados.Size = new System.Drawing.Size(278, 37);
+            this.btnEmpleados.TabIndex = 9;
+            this.btnEmpleados.Text = "Empleados";
+            this.btnEmpleados.UseVisualStyleBackColor = true;
+            this.btnEmpleados.Click += new System.EventHandler(this.btnEmpleados_Click);
+            // 
             // btnPedidos
             // 
+            this.btnPedidos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPedidos.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnPedidos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnPedidos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPedidos.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPedidos.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnPedidos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPedidos.Location = new System.Drawing.Point(-2, 177);
+            this.btnPedidos.Location = new System.Drawing.Point(-2, 269);
             this.btnPedidos.Name = "btnPedidos";
-            this.btnPedidos.Size = new System.Drawing.Size(278, 65);
+            this.btnPedidos.Size = new System.Drawing.Size(278, 37);
             this.btnPedidos.TabIndex = 8;
             this.btnPedidos.Text = "Pedidos";
             this.btnPedidos.UseVisualStyleBackColor = true;
@@ -74,10 +115,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Sistema_APE.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(-2, 404);
+            this.pictureBox1.Location = new System.Drawing.Point(-2, 450);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(274, 184);
+            this.pictureBox1.Size = new System.Drawing.Size(278, 184);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
@@ -98,15 +139,16 @@
             // 
             // btnCaja
             // 
+            this.btnCaja.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCaja.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnCaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnCaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCaja.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCaja.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnCaja.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCaja.Location = new System.Drawing.Point(-2, 105);
+            this.btnCaja.Location = new System.Drawing.Point(-2, 182);
             this.btnCaja.Name = "btnCaja";
-            this.btnCaja.Size = new System.Drawing.Size(278, 66);
+            this.btnCaja.Size = new System.Drawing.Size(278, 38);
             this.btnCaja.TabIndex = 3;
             this.btnCaja.Text = "Caja";
             this.btnCaja.UseVisualStyleBackColor = true;
@@ -114,15 +156,16 @@
             // 
             // btnInventario
             // 
+            this.btnInventario.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnInventario.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnInventario.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnInventario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnInventario.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInventario.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnInventario.Image = ((System.Drawing.Image)(resources.GetObject("btnInventario.Image")));
-            this.btnInventario.Location = new System.Drawing.Point(-2, 34);
+            this.btnInventario.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnInventario.Location = new System.Drawing.Point(-2, 226);
             this.btnInventario.Name = "btnInventario";
-            this.btnInventario.Size = new System.Drawing.Size(278, 65);
+            this.btnInventario.Size = new System.Drawing.Size(278, 37);
             this.btnInventario.TabIndex = 0;
             this.btnInventario.Text = "Inventario";
             this.btnInventario.UseVisualStyleBackColor = true;
@@ -152,6 +195,7 @@
             this.Text = "Punto de Venta";
             this.Load += new System.EventHandler(this.Main_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -165,5 +209,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.FlowLayoutPanel PanelContenedor;
         private System.Windows.Forms.Button btnPedidos;
+        private System.Windows.Forms.Button btnEmpleados;
+        private System.Windows.Forms.Label lblNombreEmpleado;
+        private System.Windows.Forms.Label label1;
     }
 }

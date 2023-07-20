@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
+using Sistema_APE.Models;
 
 namespace Sistema_APE
 {
@@ -19,15 +20,15 @@ namespace Sistema_APE
             InitializeComponent();
         }
 
-        private string ObtenerNombreEmpleado(string nombreUsuario)
+        private Empleado ObtenerEmpleadoCompleto(string nombreUsuario)
         {
-            string nombreCompleto = string.Empty;
+            Empleado empleado = null;
 
             string connectionString = Connection.getConnectionString();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT e.nombre, e.apellido FROM usuarios u INNER JOIN empleados e ON u.id_empleado = e.id_empleado WHERE u.nombre_usuario = @nombreUsuario";
+                string query = "SELECT * FROM usuarios u INNER JOIN empleados e ON u.id_empleado = e.id_empleado WHERE u.nombre_usuario = @nombreUsuario";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -39,17 +40,23 @@ namespace Sistema_APE
 
                     if (reader.Read())
                     {
-                        string nombre = reader["nombre"].ToString();
-                        string apellido = reader["apellido"].ToString();
-                        nombreCompleto = $"{nombre} {apellido}";
+                        empleado = new Empleado
+                        {
+                            IdEmpleado = Convert.ToInt32(reader["id_empleado"]),
+                            Nombre = reader["nombre"].ToString(),
+                            Apellido = reader["apellido"].ToString(),
+                            IdRol = Convert.ToInt32(reader["id_rol"]),
+                            // Asignar otras propiedades del empleado según la estructura de tu tabla
+                        };
                     }
 
                     reader.Close();
                 }
             }
 
-            return nombreCompleto;
+            return empleado;
         }
+
 
         private void btnAcceder_Click(object sender, EventArgs e)
         {
@@ -71,26 +78,35 @@ namespace Sistema_APE
 
                     int result = (int)command.ExecuteScalar();
 
+                    // Dentro del evento btnAcceder_Click
                     if (result > 0)
                     {
-                        String nombreEmpleado = ObtenerNombreEmpleado(nombreUsuario);
+                        // Obtener el objeto Empleado completo desde la base de datos
+                        Empleado empleado = ObtenerEmpleadoCompleto(nombreUsuario);
 
-                        Main formPrincipal = new Main(nombreEmpleado);
-                        this.Hide();
-                        formPrincipal.ShowDialog();
-                        this.Close();
+                        if (empleado != null)
+                        {
+                            Main formPrincipal = new Main(empleado);
+                            this.Hide();
+                            formPrincipal.ShowDialog();
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo obtener la información del empleado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
                         MessageBox.Show("Nombre de usuario o contraseña incorrectos.", "Error de inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
                 }
             }
         }
 
         private void Login_Load(object sender, EventArgs e)
         {
-            radAlmacen.Checked = true;
             txtUsuario.Text = "JEguia100";
             txtPassword.Text = "JEguia";
         }
