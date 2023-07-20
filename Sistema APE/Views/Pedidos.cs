@@ -112,6 +112,8 @@ namespace Sistema_APE.Views
 
         private void btnGenrarPedido_Click(object sender, EventArgs e)
         {
+            listBox1.Items.Clear();
+            dtgDetalles.Columns.Clear();
             var fechaPedido = DateTime.Now;
 
             CantidadTotal = detallesPedido.Sum(detalle => detalle.Cantidad);
@@ -149,6 +151,7 @@ namespace Sistema_APE.Views
                             detalleCommand.ExecuteNonQuery();
                         }
 
+                    detallesPedido.Clear();
                     conexion.Close();
                 }
             }

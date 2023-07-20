@@ -64,35 +64,62 @@ namespace Sistema_APE.Views
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            if (dgvEmpleados.SelectedRows.Count > 0)
+            {
+                int idEmpleado = Convert.ToInt32(dgvEmpleados.SelectedRows[0].Cells["id_empleado"].Value);
 
+                DialogResult result = MessageBox.Show("¿Estás seguro de que deseas eliminar este empleado?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        conexion.Open();
+
+                        using (SqlCommand command = new SqlCommand("sp_EliminarEmpleado", conexion))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@id_empleado", idEmpleado);
+
+                            command.ExecuteNonQuery();
+
+                            MostrarTabla();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error al eliminar el empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        conexion.Close();
+                    }
+                }
+            }
         }
+
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            // Verificar si se ha seleccionado una fila en el DataGridView
             if (dgvEmpleados.SelectedRows.Count > 0)
             {
-                // Obtener el índice de la fila seleccionada
-                int indiceFilaSeleccionada = dgvEmpleados.SelectedRows[0].Index;
+                int idEmpleado = Convert.ToInt32(dgvEmpleados.SelectedRows[0].Cells["id_empleado"].Value);
+                string nombre = dgvEmpleados.SelectedRows[0].Cells["nombre"].Value.ToString();
+                string apellido = dgvEmpleados.SelectedRows[0].Cells["apellido"].Value.ToString();
+                string direccion = dgvEmpleados.SelectedRows[0].Cells["direccion"].Value.ToString();
+                decimal salario = decimal.Parse(dgvEmpleados.SelectedRows[0].Cells["salario"].Value.ToString());
 
-                // Obtener el DataRow correspondiente a la fila seleccionada
-                DataRow filaSeleccionada = ((DataRowView)dgvEmpleados.Rows[indiceFilaSeleccionada].DataBoundItem).Row;
 
-                // Crear un objeto Empleado a partir del DataRow
-                Empleado empleadoSeleccionado = new Empleado
+                Empleado empleado = new Empleado
                 {
-                    IdEmpleado = Convert.ToInt32(filaSeleccionada["id_empleado"]),
-                    Nombre = filaSeleccionada["nombre"].ToString(),
-                    Apellido = filaSeleccionada["apellido"].ToString(),
-                    // ... Asegúrate de agregar todos los demás atributos del empleado ...
+                    IdEmpleado = idEmpleado,
+                    Nombre = nombre,
+                    Apellido = apellido,
+                    Salario = salario,
+                    Direccion = direccion
                 };
 
-                // Abrir el formulario de edición con los datos del empleado seleccionado
-                AbrirFormularioEditarEmpleado(empleadoSeleccionado);
-            }
-            else
-            {
-                MessageBox.Show("Seleccione un empleado para editar.", "Editar Empleado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AbrirFormularioEditarEmpleado(empleado);
             }
         }
 

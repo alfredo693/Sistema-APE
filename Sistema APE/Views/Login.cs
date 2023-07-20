@@ -78,10 +78,8 @@ namespace Sistema_APE
 
                     int result = (int)command.ExecuteScalar();
 
-                    // Dentro del evento btnAcceder_Click
                     if (result > 0)
                     {
-                        // Obtener el objeto Empleado completo desde la base de datos
                         Empleado empleado = ObtenerEmpleadoCompleto(nombreUsuario);
 
                         if (empleado != null)

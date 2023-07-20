@@ -27,6 +27,7 @@ namespace Sistema_APE
                 btnPedidos.Enabled = false;
                 btnInventario.Enabled = false;
                 btnEmpleados.Enabled =false;
+                btnProductos.Enabled = false;
             }
             else if (empleado.IdRol== 2)
             {
@@ -35,6 +36,7 @@ namespace Sistema_APE
                 btnPedidos.Enabled = true;
                 btnInventario.Enabled = true;
                 btnEmpleados.Enabled = false;
+                btnProductos.Enabled = true;
             }
             else if (empleado.IdRol == 3)
             {
@@ -43,6 +45,7 @@ namespace Sistema_APE
                 btnPedidos.Enabled = true;
                 btnInventario.Enabled = true;
                 btnEmpleados.Enabled = true;
+                btnProductos.Enabled = true;
             }
             else
             {
@@ -72,7 +75,7 @@ namespace Sistema_APE
         private void Main_Load(object sender, EventArgs e)
         {
             PanelContenedor.Size = ClientSize;
-            lblNombreEmpleado.Text = empleado.Nombre;
+            lblNombreEmpleado.Text = empleado.Nombre + " " + empleado.Apellido;
         }
 
         private void btnCaja_Click(object sender, EventArgs e)
@@ -100,6 +103,15 @@ namespace Sistema_APE
             PanelContenedor.Controls.Clear();
             PanelContenedor.Controls.Add(empleado);
             empleado.Show();
+        }
+
+        private void btnProductos_Click(object sender, EventArgs e)
+        {
+            ControlProductos productos = new ControlProductos();
+            productos.TopLevel = false;
+            PanelContenedor.Controls.Clear();
+            PanelContenedor.Controls.Add(productos);
+            productos.Show();
         }
     }
 }

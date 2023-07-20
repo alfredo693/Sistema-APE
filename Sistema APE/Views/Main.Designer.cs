@@ -38,6 +38,7 @@
             this.btnCaja = new System.Windows.Forms.Button();
             this.btnInventario = new System.Windows.Forms.Button();
             this.PanelContenedor = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnProductos = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -46,6 +47,7 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.btnProductos);
             this.panel1.Controls.Add(this.lblNombreEmpleado);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnEmpleados);
@@ -63,18 +65,20 @@
             // lblNombreEmpleado
             // 
             this.lblNombreEmpleado.AutoSize = true;
-            this.lblNombreEmpleado.Location = new System.Drawing.Point(10, 30);
+            this.lblNombreEmpleado.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombreEmpleado.Location = new System.Drawing.Point(10, 32);
             this.lblNombreEmpleado.Name = "lblNombreEmpleado";
-            this.lblNombreEmpleado.Size = new System.Drawing.Size(94, 13);
+            this.lblNombreEmpleado.Size = new System.Drawing.Size(204, 25);
             this.lblNombreEmpleado.TabIndex = 11;
             this.lblNombreEmpleado.Text = "Nombre Empleado";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(10, 7);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 13);
+            this.label1.Size = new System.Drawing.Size(114, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "Empleado:";
             // 
@@ -87,7 +91,7 @@
             this.btnEmpleados.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEmpleados.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnEmpleados.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEmpleados.Location = new System.Drawing.Point(-2, 312);
+            this.btnEmpleados.Location = new System.Drawing.Point(-2, 355);
             this.btnEmpleados.Name = "btnEmpleados";
             this.btnEmpleados.Size = new System.Drawing.Size(278, 37);
             this.btnEmpleados.TabIndex = 9;
@@ -180,6 +184,23 @@
             this.PanelContenedor.Size = new System.Drawing.Size(762, 640);
             this.PanelContenedor.TabIndex = 8;
             // 
+            // btnProductos
+            // 
+            this.btnProductos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnProductos.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnProductos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProductos.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProductos.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProductos.Location = new System.Drawing.Point(-2, 312);
+            this.btnProductos.Name = "btnProductos";
+            this.btnProductos.Size = new System.Drawing.Size(278, 37);
+            this.btnProductos.TabIndex = 12;
+            this.btnProductos.Text = "Productos";
+            this.btnProductos.UseVisualStyleBackColor = true;
+            this.btnProductos.Click += new System.EventHandler(this.btnProductos_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,5 +233,6 @@
         private System.Windows.Forms.Button btnEmpleados;
         private System.Windows.Forms.Label lblNombreEmpleado;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnProductos;
     }
 }
